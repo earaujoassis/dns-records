@@ -3,9 +3,11 @@ class RecordsController < ApplicationController
   before_action :validate_query, only: :index
 
   def index
-    records = Record.custom_filter(params[:included], params[:excluded])
+    included = default_to_array(params[:included])
+    excluded = default_to_array(params[:excluded])
+    records = Record.custom_filter(included, excluded)
     related_hostnames = Hostname
-      .filter_related_hostnames(params[:included], params[:excluded])
+      .filter_related_hostnames(included, excluded)
       .map{ |h| h.address }
       .tally
 
@@ -28,6 +30,11 @@ class RecordsController < ApplicationController
   end
 
   private
+
+  def default_to_array(param)
+    return param if param.present? && param.respond_to?(:length) && param.length > 0
+    []
+  end
 
   def validate_query
     validator_valid = params[:page].present? && params[:page].to_i > 0

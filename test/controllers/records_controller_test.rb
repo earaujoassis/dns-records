@@ -58,6 +58,58 @@ class RecordsControllerTest < ActionDispatch::IntegrationTest
     assert_equal JSON.parse(response.body), expected_response
   end
 
+  test "should return single result for dns_records" do
+    populate_record_hostname("1.1.1.1", ["lorem.com", "ipsum.com", "dolor.com", "amet.com"])
+    expected_response = {
+      "total_records" => 1,
+      "records" => [
+        {
+          "id" => Record.find_or_create_by(ip: "1.1.1.1").id,
+          "ip_address" => "1.1.1.1"
+        },
+      ],
+      "related_hostnames" => [
+        {
+          "hostname" => "lorem.com",
+          "count" => 1
+        },
+        {
+          "hostname" => "amet.com",
+          "count" => 1
+        }
+      ]
+    }
+
+    get '/dns_records', params: { page: 1, included: ["ipsum.com", "dolor.com"] }
+    assert_response :success
+    assert_equal JSON.parse(response.body), expected_response
+  end
+
+  test "should return empty result for dns_records -- with excluded attribute only" do
+    populate_record_hostname("1.1.1.1", ["lorem.com", "ipsum.com", "dolor.com", "amet.com"])
+    expected_response = {
+      "total_records" => 0,
+      "records" => [],
+      "related_hostnames" => []
+    }
+
+    get '/dns_records', params: { page: 1, excluded: ["ipsum.com", "dolor.com"] }
+    assert_response :success
+    assert_equal JSON.parse(response.body), expected_response
+  end
+
+  test "should return empty result for dns_records" do
+    expected_response = {
+      "total_records" => 0,
+      "records" => [],
+      "related_hostnames" => []
+    }
+
+    get '/dns_records', params: { page: 1 }
+    assert_response :success
+    assert_equal JSON.parse(response.body), expected_response
+  end
+
   def populate_record_hostname(record_ip, hostnames)
     record = Record.find_or_create_by(ip: record_ip)
     hostnames.each do |hn|
