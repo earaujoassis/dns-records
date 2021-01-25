@@ -50,18 +50,28 @@ Example:
 $ curl -X POST -H "Content-Type: application/json" \
     -d '{"dns_records": { "ip": "1.1.1.1", "hostnames_attributes": [{ "hostname": "lorem.com" }] } }' \
     http://localhost:3000/dns_records
-> {"id":1}
+```
 
+> `{"id":1}`
+
+
+```sh
 $ curl -X POST -H "Content-Type: application/json" \
     -d '{"dns_records": { "ip": "1.1.1.1", "hostnames_attributes": [{ "hostname": "ipsum.com" }] } }' \
     http://localhost:3000/dns_records
-> {"id":1}
+```
 
+> `{"id":1}`
+
+
+```sh
 $ curl -X POST -H "Content-Type: application/json" \
     -d '{"dns_records": { "ip": "1.1.1.1", "hostnames_attributes": [{ "hostname": "dolor.com" }] } }' \
     http://localhost:3000/dns_records
-> {"id":1}
 ```
+
+> `{"id":1}`
+
 
 ### 2. Endpoint to retrieve DNS Records
 
@@ -96,8 +106,9 @@ Example, given the entries above:
 
 ```sh
 $ curl http://localhost:3000/dns_records\?included\[\]=ipsum.com
-> {"total_records":1,"records":[{"id":1,"ip_address":"1.1.1.1"}],"related_hostnames":[{"hostname":"dolor.com","count":1},{"hostname":"lorem.com","count":1}]}
 ```
+
+> `{"total_records":1,"records":[{"id":1,"ip_address":"1.1.1.1"}],"related_hostnames":[{"hostname":"dolor.com","count":1},{"hostname":"lorem.com","count":1}]}`
 
 ## License
 
