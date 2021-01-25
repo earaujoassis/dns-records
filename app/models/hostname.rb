@@ -24,6 +24,7 @@ class Hostname < ApplicationRecord
           HAVING count(hostnames.address) = ?
         )
       )
+      ORDER BY address ASC
     ", included, included, included.length, excluded, excluded.length])
   end
 end

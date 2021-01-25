@@ -20,7 +20,7 @@ class Record < ApplicationRecord
         GROUP BY records.id
         HAVING count(hostnames.address) = ?
       )
-      ORDER BY 1 ASC
+      ORDER BY ip ASC
     ", included, included.length, excluded, excluded.length ])
   end
 end

@@ -69,7 +69,6 @@ $ curl -X POST -H "Content-Type: application/json" \
 
 Query parameters:
 
-- `page` (required): page number
 - `included`: list of all hostnames the DNS records should have
 - `excluded`: list of hostnames the DNS records should not have
 
@@ -96,8 +95,8 @@ Response body format (`application/json`):
 Example, given the entries above:
 
 ```sh
-$ curl http://localhost:3000/dns_records\?page=1\&included\[\]=ipsum.com
-> {"total_records":1,"records":[{"id":1,"ip_address":"1.1.1.1"}],"related_hostnames":[{"hostname":"lorem.com","count":1},{"hostname":"dolor.com","count":1}]}
+$ curl http://localhost:3000/dns_records\?included\[\]=ipsum.com
+> {"total_records":1,"records":[{"id":1,"ip_address":"1.1.1.1"}],"related_hostnames":[{"hostname":"dolor.com","count":1},{"hostname":"lorem.com","count":1}]}
 ```
 
 ## License

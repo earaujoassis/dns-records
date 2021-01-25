@@ -1,6 +1,6 @@
 class RecordsController < ApplicationController
   before_action :validate_dns_records, only: :create
-  before_action :validate_query, only: :index
+  # before_action :validate_query, only: :index
 
   def index
     included = default_to_array(params[:included])
