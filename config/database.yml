@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: dns_records_production
-  username: dns_records
-  password: <%= ENV['DNS_RECORDS_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DNS_RECORDS_DATABASE_URL'] %>

@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  dns_records_postgres:
+    image: 'postgres:13.1'
+    container_name: dns_records_postgres
+    hostname: dnsrecordspostgres
+    expose:
+      - "5432"
+    restart: always
+    environment:
+      POSTGRES_USER: dns_records_user
+      POSTGRES_PASSWORD: eBN23hT9Fd3hbFem
+      POSTGRES_DB: dns_records_production
+
+  dns_records:
+    build:
+      context: .
+    container_name: dns_records
+    image: dns_records
+    restart: always
+    environment:
+      - DNS_RECORDS_DATABASE_URL="postgres://dns_records_user:eBN23hT9Fd3hbFem@dnsrecordspostgres/dns_records_production"
+    ports:
+      - "3000:3000"
