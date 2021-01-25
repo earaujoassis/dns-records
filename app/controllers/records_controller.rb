@@ -23,7 +23,7 @@ class RecordsController < ApplicationController
     record = Record.find_or_create_by(ip: record_ip)
     params[:dns_records][:hostnames_attributes].each do |entry|
       hostname = Hostname.find_or_create_by(address: entry[:hostname])
-      record.hostnames << hostname
+      record.hostnames << hostname unless record.hostnames.include? hostname
     end
 
     render json: { id: record.id }

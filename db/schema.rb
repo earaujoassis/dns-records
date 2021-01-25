@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_25_150838) do
+ActiveRecord::Schema.define(version: 2021_01_25_205012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2021_01_25_150838) do
   create_table "hostnames_records", id: false, force: :cascade do |t|
     t.bigint "hostname_id", null: false
     t.bigint "record_id", null: false
+    t.index ["hostname_id", "record_id"], name: "index_hostnames_records_on_hostname_id_and_record_id", unique: true
   end
 
   create_table "records", force: :cascade do |t|
