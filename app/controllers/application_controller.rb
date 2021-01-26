@@ -3,6 +3,6 @@ class ApplicationController < ActionController::API
     :with => :render_error_response
 
   def render_error_response(error)
-    render json: { error: error }, status: 500
+    render json: { errors: error }, status: 500
   end
 end
